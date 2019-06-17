@@ -20,7 +20,11 @@ $("#add-data").on("click", function(event){
     // grab user input
     var trainName = $("#train-input").val().trim();
     var dest = $("#dest-input").val().trim();
-    var firstTrain = $("#first-input").val().trim();
+
+    // time converted into seconds
+    var firstTrain = moment($("#first-input").val().trim(), "HH:mm").subtract(10, "years").format("X");
+    console.log("user input firstTrain: " +firstTrain);
+
     var freq = $("#freq-input").val().trim();
     
     // create object that will hold train data
@@ -31,8 +35,8 @@ $("#add-data").on("click", function(event){
         frequency: freq
     };
     
-    // check new object
-    console.log(newTrain);
+    // // check new object
+    // console.log(newTrain);
     
     // upload new object to firebase database
     database.ref().push(newTrain);
@@ -47,7 +51,7 @@ $("#add-data").on("click", function(event){
 // on child added function to add new train info on html page
 database.ref().on("child_added", function(trainSnap){
     // check snapshot value from firebase database
-    console.log(trainSnap.val());
+    console.log("listener trainSnap", trainSnap.val());
 
     // store data from firebase into a new variable
     var trainName = trainSnap.val().train;
@@ -55,9 +59,28 @@ database.ref().on("child_added", function(trainSnap){
     var firstTrain = trainSnap.val().starts;
     var freq = trainSnap.val().frequency;
 
-    console.log(trainName);
-    console.log(dest);
-    console.log(firstTrain);
-    console.log(freq);
+    console.log("firebase time: " + firstTrain)
+
+    // convert time into minutes
+    var minTime = moment().diff(moment.unix(firstTrain),"minutes");
+    console.log("time in mins: "+ minTime);
+
+    // get the modulus between train time and frequency
+    var tRemainder = minTime % freq;
+    console.log("firebase remainder: " + tRemainder);
+
+    // calculate minutes away
+    var minAway = freq - tRemainder;
+    console.log("firebase minAway: " + minAway);
+
+    // calculate arrival time by adding minAway to current time
+    var arriveTime = moment().add(minAway, "m").format("hh:mm A");
+    console.log("firebase arrival: " + arriveTime);
     
+    // append new data on table
+    // create new row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        
+    )
 });
