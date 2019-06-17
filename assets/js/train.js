@@ -81,6 +81,12 @@ database.ref().on("child_added", function(trainSnap){
     // create new row
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
-        
-    )
+        $("<td>").text(dest),
+        $("<td>").text(freq),
+        $("<td>").text(arriveTime),
+        $("<td>").text(minAway),
+    );
+
+    // append newRow to html
+    $("#train-table > tbody").append(newRow);
 });
