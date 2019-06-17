@@ -43,3 +43,21 @@ $("#add-data").on("click", function(event){
     $("#first-input").val("");
     $("#freq-input").val("");
 });
+
+// on child added function to add new train info on html page
+database.ref().on("child_added", function(trainSnap){
+    // check snapshot value from firebase database
+    console.log(trainSnap.val());
+
+    // store data from firebase into a new variable
+    var trainName = trainSnap.val().train;
+    var dest = trainSnap.val().destination;
+    var firstTrain = trainSnap.val().starts;
+    var freq = trainSnap.val().frequency;
+
+    console.log(trainName);
+    console.log(dest);
+    console.log(firstTrain);
+    console.log(freq);
+    
+});
