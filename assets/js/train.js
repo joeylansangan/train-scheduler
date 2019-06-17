@@ -13,4 +13,5 @@ var firebaseConfig = {
 
   var database = firebase.database();
 
-  
+// on click event for adding train data
+$()
