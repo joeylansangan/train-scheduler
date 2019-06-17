@@ -14,4 +14,27 @@ var firebaseConfig = {
   var database = firebase.database();
 
 // on click event for adding train data
-$()
+$("#add-data").on("click", function(event){
+    event.preventDefault();
+
+    // grab user input
+    var trainName = $("#train-input").val().trim();
+    var dest = $("#dest-input").val().trim();
+    var firstTrain = $("#first-input").val().trim();
+    var freq = $("#freq-input").val().trim();
+    
+    // create object that will hold train data
+    var newTrain = {
+        train: trainName,
+        destination: dest,
+        starts: firstTrain,
+        frequency: freq
+    };
+    
+    // check new object
+    console.log(newTrain);
+    
+    // upload new object to firebase database
+    database.ref().push(newTrain);
+
+})
