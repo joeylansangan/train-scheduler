@@ -37,4 +37,9 @@ $("#add-data").on("click", function(event){
     // upload new object to firebase database
     database.ref().push(newTrain);
 
-})
+    // clear text boxes after submitting
+    $("#train-input").val("");
+    $("#dest-input").val("");
+    $("#first-input").val("");
+    $("#freq-input").val("");
+});
