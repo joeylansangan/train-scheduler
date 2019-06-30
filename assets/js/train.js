@@ -19,6 +19,7 @@ $("#add-data").on("click", function(event){
 
     // grab user input
     var trainName = $("#train-input").val().trim();
+    
     var dest = $("#dest-input").val().trim();
 
     // time converted into seconds
@@ -63,7 +64,7 @@ database.ref().on("child_added", function(trainSnap){
 
     // convert time into minutes
     var minTime = moment().diff(moment.unix(firstTrain),"minutes");
-    console.log("time in mins: "+ minTime);
+    console.log("time in mxins: "+ minTime);
 
     // get the modulus between train time and frequency
     var tRemainder = minTime % freq;
